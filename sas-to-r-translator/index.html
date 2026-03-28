@@ -471,13 +471,13 @@
   <!-- TOOLBAR -->
   <div class="toolbar">
     <span class="toolbar-label">Examples</span>
-    <button class="chip" onclick="loadExample('proc_means')">PROC MEANS</button>
-    <button class="chip" onclick="loadExample('proc_sort')">PROC SORT</button>
-    <button class="chip" onclick="loadExample('data_step')">DATA STEP</button>
-    <button class="chip" onclick="loadExample('proc_reg')">PROC REG</button>
-    <button class="chip" onclick="loadExample('macro')">MACRO</button>
+    <button class="chip" onclick="window.loadExample('proc_means')">PROC MEANS</button>
+    <button class="chip" onclick="window.loadExample('proc_sort')">PROC SORT</button>
+    <button class="chip" onclick="window.loadExample('data_step')">DATA STEP</button>
+    <button class="chip" onclick="window.loadExample('proc_reg')">PROC REG</button>
+    <button class="chip" onclick="window.loadExample('macro')">MACRO</button>
     <div class="spacer"></div>
-    <button class="btn-translate" id="translateBtn" onclick="translate()">
+    <button class="btn-translate" id="translateBtn" onclick="window.translate()">
       <div class="spinner"></div>
       <span class="btn-label">▶ &nbsp;Translate</span>
     </button>
@@ -493,7 +493,7 @@
           Input
         </div>
         <div class="panel-actions">
-          <button class="icon-btn" onclick="clearInput()">clear</button>
+          <button class="icon-btn" onclick="window.clearInput()">clear</button>
         </div>
       </div>
       <div class="editor-wrap">
@@ -512,7 +512,7 @@
           Output
         </div>
         <div class="panel-actions">
-          <button class="icon-btn" onclick="copyOutput()">copy</button>
+          <button class="icon-btn" onclick="window.copyOutput()">copy</button>
         </div>
       </div>
       <div class="editor-wrap">
@@ -599,12 +599,12 @@ QUIT;`,
 %summarize(data=housing_survey, var=household_income);`
   };
 
-  function loadExample(key) {
+  window.loadExample = function(key) {
     document.getElementById('sasInput').value = examples[key];
     updateLineNums();
   }
 
-  function clearInput() {
+  window.clearInput = function() {
     document.getElementById('sasInput').value = '';
     updateLineNums();
     document.getElementById('rOutput').innerHTML = '<span style="color:var(--text3);font-family:\'JetBrains Mono\',monospace;font-size:11px"># Translated R code will appear here...</span>';
@@ -615,7 +615,7 @@ QUIT;`,
   }
 
   // ── COPY ──
-  function copyOutput() {
+  window.copyOutput = function() {
     const text = document.getElementById('rOutput').innerText;
     navigator.clipboard.writeText(text).then(() => {
       const t = document.getElementById('toast');
@@ -645,7 +645,7 @@ QUIT;`,
   }
 
   // ── MAIN TRANSLATE ──
-  window.translate = async function() {
+  async function translate() {
     const apiKey = document.getElementById('apiKey').value.trim();
     const sasCode = document.getElementById('sasInput').value.trim();
     const btn = document.getElementById('translateBtn');
